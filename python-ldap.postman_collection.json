@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "abe4f945-f4f0-46db-83f3-fba676be79ac",
+		"name": "AD TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AD LOGIN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AD_LOGIN_USERNAME}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AD_LOGIN_PASSWORD}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Ldap-URL",
+						"value": "ldap://dd-han-nas-test.nas1.dd-han.tw"
+					},
+					{
+						"key": "X-Ldap-BaseDN",
+						"value": "dc=nas1,dc=dd-han,dc=tw"
+					},
+					{
+						"key": "X-Ldap-BindDN",
+						"value": "Administrator@NAS1"
+					},
+					{
+						"key": "X-Ldap-BindPass",
+						"value": "{{AD_ADMIN_PASSWORD}}"
+					},
+					{
+						"key": "X-CookieName",
+						"value": "nginxauth",
+						"disabled": true
+					},
+					{
+						"key": "Cookie",
+						"value": "nginxauth={{base64}}",
+						"disabled": true
+					},
+					{
+						"key": "X-Ldap-Template",
+						"value": "(sAMAccountName=%(username)s)"
+					},
+					{
+						"key": "X-Ldap-Starttls",
+						"value": "true"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LDAP LOGIN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{AD_LOGIN_USERNAME}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{AD_LOGIN_PASSWORD}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Ldap-URL",
+						"value": "ldap://192.168.5.6"
+					},
+					{
+						"key": "X-Ldap-BaseDN",
+						"value": "dc=nas,dc=dd-han,dc=tw"
+					},
+					{
+						"key": "X-Ldap-BindDN",
+						"value": "uid=root,cn=users,dc=nas,dc=dd-han,dc=tw"
+					},
+					{
+						"key": "X-Ldap-BindPass",
+						"value": "{{AD_ADMIN_PASSWORD}}"
+					},
+					{
+						"key": "X-CookieName",
+						"value": "nginxauth",
+						"disabled": true
+					},
+					{
+						"key": "Cookie",
+						"value": "nginxauth={{base64}}",
+						"disabled": true
+					},
+					{
+						"key": "X-Ldap-Template",
+						"value": "(sAMAccountName=%(username)s)",
+						"disabled": true
+					},
+					{
+						"key": "X-Ldap-Starttls",
+						"value": "true",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
