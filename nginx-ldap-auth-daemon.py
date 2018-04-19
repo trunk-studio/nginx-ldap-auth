@@ -8,6 +8,8 @@
 import sys, os, signal, base64, ldap, Cookie, argparse
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
+CACERTFILE="./ca.pem"
+
 #Listen = ('localhost', 8888)
 #Listen = "/tmp/auth.sock"    # Also uncomment lines in 'Requests are
                               # processed with UNIX sockets' section below
@@ -206,6 +208,8 @@ class LDAPAuthHandler(AuthHandler):
             # Establish a STARTTLS connection if required by the
             # headers.
             if ctx['starttls'] == 'true':
+                self.log_message('Setting CA Certificate to: %s' % CACERTFILE)
+                ldap.set_option(ldap.OPT_X_TLS_CACERTFILE, CACERTFILE)
                 ldap_obj.start_tls_s()
 
             # See http://www.python-ldap.org/faq.shtml
