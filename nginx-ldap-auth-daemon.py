@@ -8,7 +8,8 @@
 import sys, os, signal, base64, ldap, Cookie, argparse
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
-CACERTFILE="./ca.pem"
+# CACERTFILE='/etc/nginx/ldap-ca.pem'
+CACERTFILE=''
 
 #Listen = ('localhost', 8888)
 #Listen = "/tmp/auth.sock"    # Also uncomment lines in 'Requests are
@@ -62,7 +63,7 @@ class AuthHandler(BaseHTTPRequestHandler):
             self.log_message("using username/password from authorization header")
 
         if auth_header is None or not auth_header.lower().startswith('basic '):
-
+            self.log_message("no login infomation on header")
             self.send_response(401)
             self.send_header('WWW-Authenticate', 'Basic realm="' + ctx['realm'] + '"')
             self.send_header('Cache-Control', 'no-cache')
@@ -208,8 +209,9 @@ class LDAPAuthHandler(AuthHandler):
             # Establish a STARTTLS connection if required by the
             # headers.
             if ctx['starttls'] == 'true':
-                self.log_message('Setting CA Certificate to: %s' % CACERTFILE)
-                ldap.set_option(ldap.OPT_X_TLS_CACERTFILE, CACERTFILE)
+                if CACERTFILE != '':
+                    self.log_message('Setting CA Certificate to: %s' % CACERTFILE)
+                    ldap.set_option(ldap.OPT_X_TLS_CACERTFILE, CACERTFILE)
                 ldap_obj.start_tls_s()
 
             # See http://www.python-ldap.org/faq.shtml
