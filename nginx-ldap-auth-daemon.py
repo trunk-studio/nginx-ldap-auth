@@ -237,6 +237,10 @@ class LDAPAuthHandler(AuthHandler):
                 self.auth_failed(ctx, 'no objects found')
                 return
 
+            if results[0][0] == None:
+                self.auth_failed(ctx, 'objects is None')
+                return
+
             ctx['action'] = 'binding as an existing user'
             ldap_dn = results[0][0]
             ctx['action'] += ' "%s"' % ldap_dn
